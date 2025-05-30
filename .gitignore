@@ -1,0 +1,17 @@
+# Ignorer les fichiers de la base MySQL (volumes Docker)
+db_data/
+*.sql
+
+# Fichiers temporaires
+*.log
+*.DS_Store
+.env
+
+# Ignorer le contenu de wp-content sauf certains sous-dossiers
+wp-content/*
+!wp-content/themes/
+!wp-content/themes/workreap/
+!wp-content/themes/workreap/workreap-child/
+
+# Optionnel : ignorer les plugins sauf un
+# !wp-content/plugins/mon-plugin/

@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress
+    ports:
+      - "8009:80"  # WordPress accessible sur http://localhost:8009
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+
+  db:
+    image: mysql:5.7
+    container_name: wordpress-db
+    restart: always
+    ports:
+      - "3307:3306"  # MySQL accessible sur port 3307 côté hôte
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: wordpress-phpmyadmin
+    restart: always
+    ports:
+      - "8082:80"  # PhpMyAdmin accessible sur http://localhost:8082
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+
+volumes:
+  db_data:
